@@ -1,0 +1,24 @@
+{
+  "name": "@khanakiajs/dot-object",
+  "version": "1.0.0",
+  "description": "Transform json objects using dot notation.",
+  "author": "Aman Khanakia",
+  "license": "MIT",
+  "homepage": "https://js.khanakia.com",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/khanakia"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kookjs/kook"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    
+  }
+}

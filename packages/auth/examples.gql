@@ -1,0 +1,35 @@
+mutation {
+  register(data:{
+    fullName: "Aman",
+    email:"khanakia@gmail.com",
+    password:"admin"
+  }) {
+    id
+    email
+  }
+}
+
+mutation {
+  login(
+    email:"khanakia@gmail.com",
+    password:"admin"
+  )
+}
+
+query {
+  me {
+    id
+    email
+    fullName
+  }
+}
+
+mutation {
+  changePassword(
+    data: {
+      currentPassword: "admin"
+      password: "admin"
+      confirmPassword: "admin"
+    }
+  )
+}

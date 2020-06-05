@@ -1,0 +1,18 @@
+# Write your query or mutation here
+query{
+  options {
+    option_name
+    option_value
+  }
+}
+
+mutation {
+  updateOption(option:{
+    option_name: "site_url",
+    option_value: "https://khanakia.com1"
+  })
+}
+
+query {
+  option(option_name: "site_url")
+}

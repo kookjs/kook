@@ -1,0 +1,55 @@
+{
+  "name": "khanakia-quickstart",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "modules/*"
+  ],
+  "scripts": {
+    "start": "ts-node-dev --respawn --transpileOnly --ignore-watch node_modules ./quickstart/index.ts",
+    "start:nodemon": "nodemon -w 'khanakia/**/*.ts' --ext ts --exec ts-node ./quickstart/index.ts",
+    "tsnode": "ts-node ./quickstart/index.ts"
+  },
+  "devDependencies": {
+    "@types/ms": "^0.7.31",
+    "inversify": "^5.0.1",
+    "lerna": "^3.22.0",
+    "mongodb": "^3.5.7",
+    "nodemon": "^2.0.3",
+    "reflect-metadata": "^0.1.13",
+    "ts-node": "^8.9.0",
+    "typescript": "^3.9.2"
+  },
+  "dependencies": {
+    "@types/cookie-parser": "^1.4.2",
+    "@types/express": "^4.17.6",
+    "@types/glob": "^7.1.1",
+    "@types/lodash": "^4.14.150",
+    "@types/morgan": "^1.9.0",
+    "@types/node": "^13.13.4",
+    "apollo-server-express": "^2.12.0",
+    "app-root-path": "^3.0.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "chalk": "^4.0.0",
+    "class-transformer": "^0.2.3",
+    "class-validator": "^0.12.2",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "glob": "^7.1.6",
+    "graphql": "^15.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "lru-cache": "^5.1.1",
+    "morgan": "^1.10.0",
+    "ms": "^2.1.2",
+    "mysql2": "^2.1.0",
+    "nanoid": "^3.1.9",
+    "pg": "^8.2.1",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "type-graphql": "^1.0.0-rc.1",
+    "typeorm": "^0.2.24",
+    "uuid": "^8.1.0"
+  }
+}

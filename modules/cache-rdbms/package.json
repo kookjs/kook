@@ -1,0 +1,27 @@
+{
+  "name": "@khanakiajs/cache-rdbms",
+  "version": "1.0.0",
+  "description": "RDBMS Storage Engine (Mysql, Postgres, Mssql, Sqllite) for @khanakiajs/cache.",
+  "author": "Aman Khanakia",
+  "license": "MIT",
+  "homepage": "https://js.khanakia.com",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/khanakia"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kookjs/kook"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@khanakiajs/cache": "^1.0.0",
+    "typeorm": "^0.2.24",
+    "pg": "^8.2.1"
+  },
+  "devDependencies": {
+
+  }
+}

@@ -1,0 +1,52 @@
+node_modules
+Homestead.yaml
+Homestead.json
+.env
+env.js
+
+# ignore all files starting with . or ~
+##.*
+~*
+
+# ignore OS generated files
+.sass-cache
+.DS_Store
+ehthumbs.db
+Thumbs.db
+*.idea
+*.TMP
+*.tmp
+.vscode-upload.json
+
+# ignore Editor files
+*.sublime-project
+*.sublime-workspace
+*.komodoproject
+
+# ignore log files and databases
+*.log
+*.sql
+*.sqlite
+
+# ignore compiled files
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# ignore server created files
+error_log
+/tmp/
+/logs/
+/log/
+/cli/
+/cgi-bin/
+
+*.archive
+
+yarn.lock
+yarn-error.log
+
+.cache

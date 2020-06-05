@@ -1,0 +1,27 @@
+{
+  "name": "@kookjs/server",
+  "version": "1.0.0",
+  "description": "Ultra modern, fast, powerful node.js web framework (@server)",
+  "author": "Aman Khanakia",
+  "license": "MIT",
+  "homepage": "https://kook.khanakia.com",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/khanakia"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kookjs/kook"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "inversify": "^5.0.1",
+    "lodash": "^4.17.15",
+    "@kookjs/core": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.150"
+  }
+}

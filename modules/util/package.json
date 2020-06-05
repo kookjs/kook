@@ -1,0 +1,26 @@
+{
+  "name": "@khanakiajs/utils",
+  "version": "1.0.0",
+  "description": "Set of utility functions.",
+  "author": "Aman Khanakia",
+  "license": "MIT",
+  "homepage": "https://js.khanakia.com",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/khanakia"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kookjs/kook"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "lru-cache": "^5.1.1",
+    "ms": "^2.1.2"
+  },
+  "devDependencies": {
+    "@types/ms": "^0.7.31"
+  }
+}
