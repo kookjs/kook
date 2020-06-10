@@ -22,13 +22,13 @@ export class LoginResolver {
     
 
     if (!user) {
-      return 'User not found';
+      throw new Error('User not found');
     }
 
     const valid = await bcrypt.compare(password, user.password);
 
     if (!valid) {
-      return 'Wrong password.';
+      throw new Error('Wrong password');
     }
 
     // var token = jwt.sign({ foo: 'bar' }, 'shhhhh');

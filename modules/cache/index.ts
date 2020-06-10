@@ -1,49 +1,79 @@
-import { ICacheEngine } from './ICacheEngine'
-import ms from 'ms'
-import { MemoryEngine } from './MemoryEngine'
-export interface IConfig {
-  engine?: ICacheEngine
+import { Store } from "./Store";
+import ms from "ms";
+import { MemoryStore } from "./MemoryStore";
+export interface CacheOptions {
+  /** Specify the store for cache new MemoryStore() || new RdbmsStore() */
+  /** @type {Store} */
+  store?: Store
+
+  /** When utilizing a RAM based store such as APC or Memcached, there might be other applications utilizing the same cache. So, we'll specify a value to get prefixed to all our keys so we can avoid collisions. */ 
+  prefix?: any
 }
+
+import { isString } from "@khanakiajs/utils";
 
 export class Cache {
-  protected config : IConfig
-  protected engine : ICacheEngine
+  protected config: CacheOptions;
+  protected store: Store;
 
-  constructor(config?: IConfig) {
-    this.config = config||{}
+  constructor(config?: CacheOptions) {
+    this.config = Object.assign({} , {
+      prefix: 'kcache:'
+    }, config)
 
-    this.engine = this.config.engine||new MemoryEngine()
+    this.store = this.config.store || new MemoryStore();
   }
 
-  setEngine(engine: ICacheEngine) {
-    this.engine = engine
-  }
-
+  /**
+     * Retrieve an item from the cache by key.
+     *
+     * @param  string  $key
+     * @return mixed
+     */
   async get(key: string, defaultVal?: any) {
-    const value = await this.engine.get(key)
-    if(value) return JSON.parse(value)
-    return defaultVal
+    const value = await this.store.get(this.config.prefix+key);
+    if (value) return JSON.parse(value);
+    return defaultVal;
   }
 
-  /*
-   * ttl: specify in milisecons 60000 ms = 6 sec
-  */
-  async set(key: string, value: any, ttl: string='60000') {
-    // console.log('set')
-    const _ttl = ms(ttl)
-    value = JSON.stringify(value)
-    return this.engine.set(key, value, _ttl)
-    // console.log(ms(ttl)/1000)
+  /**
+   * Store an item in the cache for a given number of seconds.
+   *
+   * @param  string  $key
+   * @param  mixed  $value
+   * @param  {int|string}  $seconds - You can specify in numbers e.g. 60 seconds or you can have declarative
+   * params as string e.g. 60s | 1d - https://github.com/vercel/ms
+   * @return bool
+   */
+  async put(key: string, value: any, ttl: string | number = 60) {
+    console.log(this.config.prefix)
+    let _ttl = ttl;
+    if (isString(ttl)) {
+      _ttl = ms(ttl) / 1000; // convert to secons
+    }
+    value = JSON.stringify(value);
+    return this.store.put(this.config.prefix+key, value, <number>_ttl);
   }
 
+  /**
+   * Remove an item from the cache.
+   *
+   * @param  string  $key
+   * @return bool
+   */
   async del(key: string) {
-    return this.engine.del(key)
+    return this.store.del(key);
   }
 
-  async reset() {
-    return this.engine.reset()
+	/**
+	 * Remove all items from the cache.
+	 *
+	 * @return bool
+	 */
+  async flush() : Promise<Boolean> {
+    return this.store.flush();
   }
 }
 
-export * from './ICacheEngine'
-export * from './MemoryEngine'
+export * from "./Store";
+export * from "./MemoryStore";

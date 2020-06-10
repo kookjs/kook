@@ -61,12 +61,4 @@ export default class Auth {
       // return ctx
     })
   }
-
-  async boot() {
-    // console.log('Hook boot')
-  }
-
-  setConfig() {
-    
-  }
 }

@@ -18,7 +18,7 @@ import _ from 'lodash'
 import Server from '@kookjs/server'
 import Hook from '@kookjs/hook'
 // import { TYPES } from "../../types";
-// import {IPlugin} from '@kookjs/core'
+import { config } from '@kookjs/core'
 
 import _config , { IConfig } from './config'
 
@@ -27,7 +27,7 @@ export default class ServerExpress {
   private _hook: Hook
   private _server: Server
   
-  public version: string;
+  public version: string = '1.0.0';
 
   protected config : IConfig
 
@@ -36,15 +36,14 @@ export default class ServerExpress {
   public app: express.Application
 
   constructor(@inject('Hook') hook: Hook, @inject('Server') server: Server ) {
-    this.version = "1.0.0"
-
+  
     this._hook = hook
     this._server = server
 
     // console.log('Server Express - consturctor called')
     // console.log(this._hook.version)
 
-    this.config = _config
+    this.config = Object.assign({}, _config, config('server-express'))
 
     this.router = express.Router()
     let app = express();
@@ -108,13 +107,9 @@ export default class ServerExpress {
 
   }
 
-  setConfig(config: any) {
-    config = Object.assign({}, this.config, config)
-    this.config = config
-    return config
-  }
-  
-  helloServer() {
-    console.log('server hello', this._hook.version)
-  }
+  // setConfig(config: any) {
+  //   config = Object.assign({}, this.config, config)
+  //   this.config = config
+  //   return config
+  // }
 }

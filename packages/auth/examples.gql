@@ -33,3 +33,14 @@ mutation {
     }
   )
 }
+
+mutation {
+  forgotPassword(email:"khanakia@gmail.com")
+}
+
+mutation {
+  passwordReset(data:{
+    token: "123",
+    password:"admin"
+  })
+}

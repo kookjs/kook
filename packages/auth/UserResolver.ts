@@ -1,10 +1,9 @@
 import { Resolver, Query, Mutation, Arg, Ctx, UseMiddleware, Authorized } from "type-graphql";
 import bcrypt from "bcryptjs";
-// import { v4 } from "uuid";
 import { nanoid } from 'nanoid'
 
-
-import  ObjectScalarType from '@kookjs/core/gql/types/ObjectScalarType'
+import Cache from '@kookjs/cache'
+// import  ObjectScalarType from '@kookjs/core/gql/types/ObjectScalarType'
 import { MyContext } from "./MyContext";
 import { User } from "./entity/User";
 import { RegisterInput } from "./register/RegisterInput";
@@ -12,7 +11,10 @@ import { RegisterInput } from "./register/RegisterInput";
 // import { logger } from "../middleware/logger";
 // import { sendEmail } from "../utils/sendEmail";
 // import { createConfirmationUrl } from "../utils/createConfirmationUrl";
-import { ChangePasswordInput } from './PasswordInput'
+import { ChangePasswordInput, PasswordResetInput } from './PasswordInput'
+import { getApp } from "@kookjs/core";
+
+import { forgotPasswordPrefix } from './constants'
 
 @Resolver()
 export class UserResolver {
@@ -77,22 +79,52 @@ export class UserResolver {
     return true;
   }
 
-  @Mutation(() => Boolean)
-  async forgotPassword(@Arg("email") email: string): Promise<boolean> {
+  @Mutation(() => String)
+  async forgotPassword(@Arg("email") email: string): Promise<string> {
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
       throw new Error('User not found.')
     }
 
-    const token = nanoid();
-    // await redis.set(forgotPasswordPrefix + token, user.id, "ex", 60 * 60 * 24); // 1 day expiration
-
+    // const token = nanoid();
+    const token = '123';
+    const cm = getApp().getPlugin(Cache)
+    cm.default.put(`${forgotPasswordPrefix}${token}`, user.id, '1d') // 1 day expiration
+  
     // await sendEmail(
     //   email,
     //   `http://localhost:3000/user/change-password/${token}`
     // );
 
-    return true;
+    return token;
+  }
+
+  @Mutation(() => String)
+  async passwordReset(@Arg("data") { token, password }: PasswordResetInput): Promise<string> {
+
+    const cm = getApp().getPlugin(Cache)
+    // console.log(cm.default)
+    const userId = await cm.default.get(forgotPasswordPrefix + token);
+
+    if (!userId) {
+      throw new Error('Token not found.')
+    }
+
+    const user = await User.findOne(userId);
+
+    if (!user) {
+      throw new Error('User not found1.')
+    }
+
+    await cm.default.del(forgotPasswordPrefix + token);
+
+    user.password = await bcrypt.hash(password, 12);
+
+    await user.save();
+
+    // ctx.req.session!.userId = user.id;
+
+    return 'Password reset successfully';
   }
 }

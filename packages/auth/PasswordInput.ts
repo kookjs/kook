@@ -25,3 +25,10 @@ export class ChangePasswordInput {
   @MinLength(5)
   confirmPassword: string;
 }
+
+@InputType()
+export class PasswordResetInput extends PasswordMixin(class {}) {
+  @Field()
+  token: string;
+}
+

@@ -1,5 +1,5 @@
 {
-  "name": "@kookjs/cache-manager",
+  "name": "@kookjs/mail",
   "version": "1.0.0",
   "description": "Ultra modern, fast, powerful node.js web framework",
   "author": "Aman Khanakia",
@@ -20,9 +20,12 @@
     "inversify": "^5.0.1",
     "lodash": "^4.17.15",
     "@kookjs/core": "^1.0.0",
-    "@khanakiajs/cache": "^1.0.0"
+    "nodemailer": "^6.4.8",
+    "twig": "^1.15.1"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.150"
+    "@types/lodash": "^4.14.150",
+    "@types/nodemailer": "^6.4.0",
+    "@types/twig": "^1.12.3"
   }
 }

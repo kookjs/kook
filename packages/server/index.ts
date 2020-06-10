@@ -16,7 +16,7 @@ export default class Server {
     this.version = "1.0.0"
 
     // this._hook = hook
-    console.log('Server consturctor called')
+    // console.log('Server consturctor called')
     // console.log(this._hook.version)
 
     this.config = _config

@@ -11,7 +11,7 @@ import { getGlobalVariable } from './utils'
 /*
  Create new App from App constructor
 */
-function createApp(config?: IAppConfig) : App {
+function _createApp(config?: IAppConfig) : App {
  const app = new App(config);
  app.registerPlugin(Hook)
  return app
@@ -21,11 +21,16 @@ function createApp(config?: IAppConfig) : App {
  Create new App and to the globalScope if not exists otherwise
  get existing app from globalScope 
 */
-export function getApp(config?: IAppConfig): App {
+export function createApp(config?: IAppConfig): App {
   const globalScope = getGlobalVariable();
   if (!globalScope.App)
-      globalScope.App = createApp(config);
+      globalScope.App = _createApp(config);
 
+  return globalScope.App;
+}
+
+export function getApp(config?: IAppConfig): App {
+  const globalScope = getGlobalVariable();
   return globalScope.App;
 }
 
@@ -38,9 +43,10 @@ export function getPlugin<T>(c: new (...args:any) => T) : T {
   return app.getPlugin(c)
 }
 
-export const config = (key: string, defaultValue?:string) : any => {
+export const config = (key: string, defaultValue:any={}) : any => {
   const app = getApp()
-  return (true && app.configManager.config[key]) || defaultValue
+  // return (true && app.configManager.config[key]) || defaultValue
+  return (true && app.configManager.get(key)) || defaultValue
 }
 
 /*

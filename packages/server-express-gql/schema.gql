@@ -18,8 +18,9 @@ type Mutation {
   addOption(option: OptionInput!): Option!
   addRecipe(recipe: RecipeInput!): Recipe!
   changePassword(data: ChangePasswordInput!): Boolean!
-  forgotPassword(email: String!): Boolean!
+  forgotPassword(email: String!): String!
   login(email: String!, password: String!): String
+  passwordReset(data: PasswordResetInput!): String!
   register(data: RegisterInput!): User!
   removeOption(option_name: String!): Boolean!
   updateOption(option: OptionInput!): Boolean!
@@ -34,6 +35,11 @@ type Option {
 input OptionInput {
   option_name: String!
   option_value: String
+}
+
+input PasswordResetInput {
+  password: String!
+  token: String!
 }
 
 type Query {

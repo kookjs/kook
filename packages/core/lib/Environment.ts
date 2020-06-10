@@ -10,7 +10,7 @@ export default class Environment {
 
   load() {
     const nodeEnv = process.env.NODE_ENV
-    const fileName = nodeEnv=='development' ? 'env.js' : `env.${nodeEnv}.js`
+    const fileName = ['development', undefined].indexOf(nodeEnv) !==-1 ? 'env.js' : `env.${nodeEnv}.js`
 
     const filePath = `${this.appRoot}/${fileName}`
     // console.log(chalk.gray.underline(prefix), info);

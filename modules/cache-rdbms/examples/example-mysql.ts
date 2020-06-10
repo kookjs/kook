@@ -4,7 +4,7 @@
 */
 
 import { Cache } from '@khanakiajs/cache'
-import DbEngine from '../'
+import RdbmsStore from '@khanakiajs/cache-rdbms'
 import {createConnection, Connection, ConnectionOptions} from "typeorm";
 import { CacheStore } from '@khanakiajs/cache-rdbms'
 
@@ -26,10 +26,10 @@ const main = async () => {
   const connection = await createConnection(configConnection);
 
   const cache = new Cache({
-    engine: new DbEngine(connection)
+    store: new RdbmsStore(connection)
   })
 
-  await cache.set('name', 'Hello world !!')
+  await cache.put('name', 'Hello world !!')
   // await sleep(7000)
   const name = await cache.get('name')
   console.log(name)

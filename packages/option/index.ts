@@ -1,10 +1,10 @@
 import { injectable, inject } from "inversify";
 
 import { getApp } from '@kookjs/core'
-import {IPlugin} from '@kookjs/core'
+// import {IPlugin} from '@kookjs/core'
 
 import DB from '@kookjs/db'
-import Server from '@kookjs/server'
+// import Server from '@kookjs/server'
 import ServerExpressGql from '@kookjs/server-express-gql'
 
 import OptionEntity from './entity/Option'
@@ -21,7 +21,7 @@ export default class Option {
     // this._server = server
     // this.db = db
 
-    db.addEntity(OptionEntity, ['default', 'mysql'])
+    db.addEntity(OptionEntity, ['default'])
 
     const app = getApp()
     // const server = app.getPlugin(Server)
@@ -38,11 +38,4 @@ export default class Option {
     serverExpressGql.addResolver(OptionResolver)
   }
 
-  async boot() {
-    // const o = new OptionEntity()
-    // o.option_name = 'site_url1'
-    // o.option_value = 'test'
-    // o.save()
-  }
-  setConfig() {}
 }

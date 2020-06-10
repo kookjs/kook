@@ -1,9 +1,9 @@
-import { ICacheEngine } from '@khanakiajs/cache'
+import { Store } from '@khanakiajs/cache'
 
 import { Connection } from "typeorm";
 import {CacheStore} from './entity/CacheStore'
 
-export default class PgEngine implements ICacheEngine {
+export default class RdbmsStore implements Store {
   constructor(protected connection: Connection) {}
 
   async get(key: string) {
@@ -22,7 +22,7 @@ export default class PgEngine implements ICacheEngine {
 		}
   }
 
-  async set(key: string, val: any, ttl: number) {
+  async put(key: string, val: any, seconds: number) {
     try {			
 			let record = await CacheStore.findOne({ key });
 			if (!record) {
@@ -31,11 +31,11 @@ export default class PgEngine implements ICacheEngine {
       }
       record.value = val;
 
-      // console.log(new Date().toLocaleString());
-
       // divided by 1000 to convert epoch miliseconds to seconds
-      const expiration = parseInt(((Date.now() + (ttl | 60) ) / 1000).toFixed(0))
-      console.log(expiration) 
+      const expiration = parseInt(((Date.now() + (seconds | 60) * 1000 ) / 1000).toFixed(0))
+      // console.log(new Date().toLocaleString());
+      // console.log(expiration) 
+      // console.log(seconds)
       record.expiration = expiration
 
       await record.save();
@@ -46,16 +46,23 @@ export default class PgEngine implements ICacheEngine {
 		}
   }
 
-  async del(key: string) {
+  async del(key: string) : Promise<Boolean> {
     try {
-			await CacheStore.delete({ key });
+      console.log(await CacheStore.delete({ key }));
+      return true
 		} catch (e) {
-			console.log(e);
+      console.log(e);
+      return false
 		}
   }
 
-  async reset() {
-    await CacheStore.query('TRUNCATE table "cache_store"'); 
+  async flush(): Promise<Boolean> {
+    try {
+      await CacheStore.query('TRUNCATE table "cache_store"'); 
+      return true
+    } catch (error) {
+      return false
+    }
   }
 }
 

@@ -1,6 +1,7 @@
 import { Container } from "inversify";
 const chalk = require('chalk');
 const _ = require('lodash')
+var appRoot = require('app-root-path');
 
 import { IPlugin } from './interface/IPlugin'
 import { IAppConfig } from './interface/IAppConfig'
@@ -21,6 +22,8 @@ export default class App {
   constructor(config?: IAppConfig) {
     this.config =  _.merge(_config, config)
 
+    appRoot.setPath(this.config.root)
+
     this.container = new Container()
 
     // Load env.js file to node enviornment first
@@ -29,7 +32,7 @@ export default class App {
 
     // this.configManager = new ConfigManager(this.config.root)
     this.configManager = getConfigManager(this.config.root)
-    this.configManager.loadConfigs()
+    // this.configManager.loadConfigs()
 
     this.plugins= {}
 

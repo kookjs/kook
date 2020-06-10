@@ -49,15 +49,18 @@ function getPathSegments(path) : string[] {
 
 
 
-function get(object, path, value?) {
+function get(object, path, value=null) {
   if (!isObj(object) || typeof path !== 'string') {
-    return value === undefined ? object : value;
+    // return value === undefined ? object : value;
+    return value
   }
 
   const pathArray = getPathSegments(path);
   if (pathArray.length === 0) {
     return;
   }
+
+  // console.log(pathArray)
 
   return getArrayValue(object, pathArray, value)
 }

@@ -7,7 +7,7 @@ import { buildSchema, NonEmptyArray } from "type-graphql";
 
 import Hook from '@kookjs/hook'
 import ServerExpress from '@kookjs/server-express'
-// import {IPlugin} from '@kookjs/core'
+import { config } from '@kookjs/core'
 
 import { RecipeResolver } from "./sample/recipe-resolver";
 import _config , { IConfig } from './config'
@@ -38,13 +38,13 @@ export default class ServerExpressGql {
 
     this._serverExpress = serverExpress
 
-    this.config = _config
+    this.config = Object.assign({}, _config, config('server-express-gql'))
 
     this.resolvers = [RecipeResolver]
   }
 
   async boot() {
-    console.log('Server Express Gql boot')
+    // console.log('Server Express Gql boot')
     // console.log(this.config)
 
     // build TypeGraphQL executable schema
@@ -84,11 +84,11 @@ export default class ServerExpressGql {
     this._hook.Filter.add("ApolloServer/Context", fn)
   }
 
-  setConfig(config: any) {
-    config = Object.assign({}, this.config, config)
-    this.config = config
-    return config
-  }
+  // setConfig(config: any) {
+  //   config = Object.assign({}, this.config, config)
+  //   this.config = config
+  //   return config
+  // }
   
   addResolver(resolver: TResolver): TResolver[] {
     this.resolvers = [...this.resolvers, ...[resolver]]

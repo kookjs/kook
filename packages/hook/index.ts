@@ -6,7 +6,7 @@ import action from './action'
 import filter from './filter'
 
 @injectable()
-class Hook implements IPlugin {
+class Hook {
   readonly version: string = "1.0";
   
   readonly Action: action
@@ -22,10 +22,6 @@ class Hook implements IPlugin {
   async boot() {
     // console.log('Hook boot')
 
-  }
-
-  setConfig() {
-    
   }
 }
 

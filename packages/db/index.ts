@@ -20,14 +20,14 @@ export default class DB {
   }
 
   async boot() {
-    if(this.connectionOptions.length==0) return console.log(chalk.red(`Plugin DB - Cannot start Database. default variable not defined in config.`))
+    if(this.connectionOptions.length==0) return console.log(chalk.red(`Plugin DB - Cannot start Database. Connections config not found.`))
     
     await createConnections(this.connectionOptions)
   }
 
   addEntity(entity: Function, connectionNames: string[]=['default']) {
     for (const option of this.connectionOptions) {
-      console.log(option.name, connectionNames.indexOf(option.name))
+      // console.log(option.name, connectionNames.indexOf(option.name))
       if(!option.entities || connectionNames.indexOf(option.name)==-1) continue
       option.entities = [...option.entities, ...[entity]]
     }

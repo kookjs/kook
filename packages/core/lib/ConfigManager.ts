@@ -9,7 +9,7 @@ import glob from 'glob'
 export default class ConfigManager {
   // public env : string
   private appRoot : string
-  public config : any
+  readonly config : any
 
   constructor(appRoot: string) {
     // this.env = process.env.NODE_ENV||'default'
@@ -29,7 +29,7 @@ export default class ConfigManager {
   //     const c = require(filePath)
   //     return c
   //   }
-  //   return {}
+  //   return null
   // }
 
   // get(fileName: string) {
@@ -46,16 +46,26 @@ export default class ConfigManager {
   //   return config
   // }
 
-  loadConfigs() {
-    const files = glob.sync(path.resolve(`${this.appRoot}/config/*.{ts,js}`))
-    for (const file of files) {
-      // console.log(file)
-      const configName = path.parse(file).name;
-      // console.log(configName)
-      this.config[configName] = require(file)
+  get(name: string): any {
+    if(this.config[name]) return this.config[name]
+    let filePath = path.resolve(`${this.appRoot}/config/${name}.ts`)
+    if(fs.existsSync(filePath)) {
+      this.config[name] = require(filePath)
+      return this.config[name]
     }
-    // console.log(this.config)
+    return null
   }
+
+  // loadAll() {
+  //   const files = glob.sync(path.resolve(`${this.appRoot}/config/*.{ts,js}`))
+  //   for (const file of files) {
+  //     // console.log(file)
+  //     const configName = path.parse(file).name;
+  //     // console.log(configName)
+  //     this.config[configName] = require(file)
+  //   }
+  //   // console.log(this.config)
+  // }
 }
 
 

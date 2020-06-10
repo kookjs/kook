@@ -1,51 +1,50 @@
 ## Cache Manger Plugin for Kook.js
 
-### HOW TO USE
+### Usage
 Create a new config file in config/cache.ts and you can register your connnections like below
 ```
-// import { env } from '@kookjs/core'
-const { env } = require('@kookjs/core')
-module.exports = {
+import { ConfigOptions } from '@kookjs/cache'
+const config: ConfigOptions = {
   'default' : 'database',
 
-  'stores' : [
-    {
-      name: "memory",
-      driver: "memory",
+  'stores' : {
+    'memory' : {
+      driver: "memory"
     },
 
-    {
-      name: "database",
+    'database': {
       driver: "database",
       connectionName: 'default'
     },
-  ],
 
-  prefix: 'cache'
+  },
+
+  prefix: 'cache:'
 }
+export default config
 ```
 
 After that you can register your plugin in your bootstrap file
 ```
-import {getApp, env} from '@kookjs/core'
-const app = getApp({
+import {createApp, env} from '@kookjs/core'
+import Cache from "@kookjs/cache";
+const app = createApp({
   root: __dirname
 })
-import CacheManager from '@kookjs/cache-manager'
-app.registerPlugin(CacheManager)
+app.registerPlugin(Cache)
 ```
 
 ### Usage
-By default CacheManager returns the MemoryEngine so you can use it like this
+By default Cache returns the [MemoryStore](https://github.com/kookjs/kook/tree/master/modules/cache) so you can use it like this
 ```
 const cache = app.getPlugin(CacheManager).default
-await cache.set('name', 'kook')
+await cache.put('name', 'kook')
 await cache.get('name', 'defaultValue')
 ```
 
-### Using Cache RDBMS
+### Using Cache RDBMS Store for database postgres, mysql, mssql
 
-* Install the plugin **@khanakiajs/cache-rdbms** 
+* Install the plugin **[@khanakiajs/cache-rdbms](https://github.com/kookjs/kook/tree/master/modules/cache-rdbms)** 
 * Create a config see above
 * Register the entity in your typeorm entities[].
 ```
