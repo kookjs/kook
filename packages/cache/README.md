@@ -1,7 +1,7 @@
 ## Cache Manger Plugin for Kook.js
 
 ### Usage
-Create a new config file in config/cache.ts and you can register your connnections like below
+Create a new config file in your app root `config/cache.ts` and you can register your connnections like below.
 ```
 import { ConfigOptions } from '@kookjs/cache'
 const config: ConfigOptions = {
