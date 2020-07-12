@@ -7,7 +7,7 @@ import RdbmsStore from '@khanakiajs/cache-rdbms'
 import {createConnection, Connection, ConnectionOptions} from "typeorm";
 import { CacheStore } from '@khanakiajs/cache-rdbms'
 
-import { sleep } from '@khanakiajs/utils'
+import { sleep } from '@khanakiajs/util'
 
 const configConnection : ConnectionOptions = {
   type: "postgres",
@@ -15,7 +15,7 @@ const configConnection : ConnectionOptions = {
   port: 5432,
   username: "postgres",
   password: "root",
-  database: "jeoga",
+  database: "kookdb",
   synchronize: true,
   logging: false,
   entities: [CacheStore]

@@ -1,79 +1,48 @@
-// const path = require('path');
-const fs = require('fs');
-const _ = require('lodash')
-import { getGlobalVariable } from '../utils'
+import fs from "fs";
+import path from "path";
+import _ from "lodash";
+import appRoot from "app-root-path";
+import dotObject from "@khanakiajs/dot-object";
+import { getGlobalVariable, interopDefault } from "@khanakiajs/util";
 
-import path from 'path'
-import glob from 'glob'
+class ConfigManager {
+	readonly config: any;
 
-export default class ConfigManager {
-  // public env : string
-  private appRoot : string
-  readonly config : any
+	constructor() {
+		this.config = {};
+	}
 
-  constructor(appRoot: string) {
-    // this.env = process.env.NODE_ENV||'default'
-    this.appRoot = appRoot;
-
-    this.config = {}
-  }
-
-  // getFilePath(fileName: string, env: string) {
-  //   const filePath = `${this.appRoot}/config/${env}/${fileName}.js`
-  //   // console.log(filePath)
-  //   return filePath
-  // }
-  
-  // getFile(filePath: string) {
-  //   if(fs.existsSync(filePath)) {
-  //     const c = require(filePath)
-  //     return c
-  //   }
-  //   return null
-  // }
-
-  // get(fileName: string) {
-  //   const filePathDefault = this.getFilePath(fileName, 'default')
-  //   const configDefault = this.getFile(filePathDefault)
-    
-  //   let configEnv = {}
-  //   if(this.env!=='default') {
-  //     const filePathEnv = this.getFilePath(fileName, this.env)
-  //     configEnv = this.getFile(filePathEnv)
-  //   }
-    
-  //   const config = _.merge(configDefault, configEnv)
-  //   return config
-  // }
-
-  get(name: string): any {
-    if(this.config[name]) return this.config[name]
-    let filePath = path.resolve(`${this.appRoot}/config/${name}.ts`)
-    if(fs.existsSync(filePath)) {
-      this.config[name] = require(filePath)
-      return this.config[name]
-    }
-    return null
-  }
-
-  // loadAll() {
-  //   const files = glob.sync(path.resolve(`${this.appRoot}/config/*.{ts,js}`))
-  //   for (const file of files) {
-  //     // console.log(file)
-  //     const configName = path.parse(file).name;
-  //     // console.log(configName)
-  //     this.config[configName] = require(file)
-  //   }
-  //   // console.log(this.config)
-  // }
+	get(name: string): any {
+		if (this.config[name]) return this.config[name];
+		let filePath = path.resolve(appRoot.path, 'config', `${name}.ts`);
+		if (fs.existsSync(filePath)) {
+			const config = require(filePath);
+			this.config[name] = interopDefault(config);
+			return this.config[name];
+		}
+		return null;
+	}
 }
 
+/**
+ * Get ConfigManager class from globalScope if not exists then create a new one
+ * and then add to the globalScope
+ */
+const getConfigManager = (): ConfigManager => {
+	const globalScope = getGlobalVariable();
+	if (!globalScope.AppConfig) globalScope.AppConfig = new ConfigManager();
+	return globalScope.AppConfig;
+};
 
-
-export const getConfigManager = (appRoot: string) : ConfigManager => {
-  const globalScope = getGlobalVariable();
-  if (!globalScope.AppConfig)
-      globalScope.AppConfig  = new ConfigManager(appRoot);
-  return globalScope.AppConfig
-}
-
+/**
+ *
+ * @param keyPath string - You can pass key like this config('app.appName')
+ * @param defaultValue any - If no value is returned then it will use default value
+ */
+export const config = (keyPath: string, defaultValue: any = null): any => {
+	const segments = dotObject.getPathSegments(keyPath);
+	const key = segments.shift();
+	const config = getConfigManager().get(key);
+	const value = dotObject.getArrayValue(config, segments, defaultValue);
+	return value;
+};

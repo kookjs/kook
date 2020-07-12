@@ -5,15 +5,15 @@ import SendmailTransport = require('nodemailer/lib/sendmail-transport');
 import SESTransport = require('nodemailer/lib/ses-transport');
 import StreamTransport = require('nodemailer/lib/stream-transport');
 
-export type TTransportOptions = SMTPTransport.Options | SMTPConnection.Options | JSONTransport.Options | SendmailTransport.Options | SESTransport.Options | StreamTransport.Options
+export type TransportOptions = SMTPTransport.Options | SMTPConnection.Options | JSONTransport.Options | SendmailTransport.Options | SESTransport.Options | StreamTransport.Options
 
 export interface ITransportOptions extends SMTPConnection.Options,JSONTransport.Options,SendmailTransport.Options,SESTransport.Options, StreamTransport.Options {}
 
-type TTransporters = {[key: string]: TTransportOptions}
+type TransportersOptions = {[key: string]: TransportOptions}
 
-export interface IConfig {
+export interface ConfigOptions {
   default: string,
-  mailers: TTransporters,
+  mailers: TransportersOptions,
   from: {
     address: string,
     name: string

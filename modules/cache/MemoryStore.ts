@@ -23,12 +23,12 @@ export class MemoryStore implements Store {
     return this.cache.set(key, val, ttl*1000)
   }
 
-  async del(key: string) : Promise<Boolean> {
+  async del(key: string) : Promise<boolean> {
     this.cache.del(key)
     return true
   }
 
-  async flush() : Promise<Boolean> {
+  async flush() : Promise<boolean> {
     this.cache.reset()
     return true
   }

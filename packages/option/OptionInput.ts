@@ -1,11 +1,14 @@
 import  Option  from "./entity/Option";
 import { InputType, Field } from "type-graphql";
+import { IsInt } from "class-validator";
 
 @InputType()
 export class OptionInput implements Partial<Option> {
+
+  // @IsInt({ message: "email already in use" })
   @Field()
-  option_name: string;
+  key: string;
 
   @Field({ nullable: true })
-  option_value?: string;
+  value?: string;
 }

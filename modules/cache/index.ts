@@ -10,7 +10,7 @@ export interface CacheOptions {
   prefix?: any
 }
 
-import { isString } from "@khanakiajs/utils";
+import { isString } from "@khanakiajs/util";
 
 export class Cache {
   protected config: CacheOptions;
@@ -46,7 +46,7 @@ export class Cache {
    * @return bool
    */
   async put(key: string, value: any, ttl: string | number = 60) {
-    console.log(this.config.prefix)
+    // console.log(this.config.prefix)
     let _ttl = ttl;
     if (isString(ttl)) {
       _ttl = ms(ttl) / 1000; // convert to secons
@@ -62,7 +62,7 @@ export class Cache {
    * @return bool
    */
   async del(key: string) {
-    return this.store.del(key);
+    return this.store.del(this.config.prefix+key);
   }
 
 	/**
@@ -70,7 +70,7 @@ export class Cache {
 	 *
 	 * @return bool
 	 */
-  async flush() : Promise<Boolean> {
+  async flush() : Promise<boolean> {
     return this.store.flush();
   }
 }

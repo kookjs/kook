@@ -3,35 +3,35 @@ import Option from "./entity/Option";
 
 @EntityRepository(Option)
 export default class OptionRepository extends Repository<Option> {
-	async findByName(option_name: string, defaultValue = null) {
+	async findByKey(key: string, defaultValue = null) {
 		try {
-			const record = await this.findOne({ option_name });
+			const record = await this.findOne({ key });
 			if (!record) return defaultValue;
-			return record.option_value;
+			return record.value;
 		} catch (e) {
 			// console.log(e);
 			return defaultValue;
 		}
 	}
 
-	async add(key: string, value: any) : Promise<Boolean> {
+	async add(key: string, value: any) : Promise<Option | Error> {
 		try {
 			let record = new Option();
-			record.option_name = key.trim();
-			record.option_value = value;
+			record.key = key.trim();
+			record.value = value;
 			await this.save(record);
-			return true;
+			return record;
 		} catch (e) {
 			console.log(e);
-			return false;
+			return new Error('Option already exists.');
 		}
 	}
 
-	async updateByKey(key: string, value: any) : Promise<Boolean> {
+	async updateByKey(key: string, value: any) : Promise<boolean> {
 		try {			
-			const record = await this.findOne({ option_name: key });
+			const record = await this.findOne({ key: key });
 			if (record) {
-				record.option_value = value;
+				record.value = value;
 				await this.save(record);
 			} else {
 				await this.add(key, value);
@@ -43,9 +43,9 @@ export default class OptionRepository extends Repository<Option> {
 		}
 	}
 
-	async removeByKey(key: string): Promise<Boolean> {
+	async removeByKey(key: string): Promise<boolean> {
 		try {
-			await this.delete({ option_name: key });
+			await this.delete({ key: key });
 			return true;
 		} catch (e) {
 			console.log(e);

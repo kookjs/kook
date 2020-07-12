@@ -1,7 +1,7 @@
 {
   "name": "@kookjs/cache",
   "version": "1.0.0",
-  "description": "Ultra modern, fast, powerful node.js web framework",
+  "description": "Small and efficient cache provider for Node.JS with In-memory, Postgres, Mysql, Mssql, Sqllite. for (@kookjs)",
   "author": "Aman Khanakia",
   "license": "MIT",
   "homepage": "https://kook.khanakia.com",

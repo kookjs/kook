@@ -1,7 +1,4 @@
 import { injectable } from "inversify";
-
-import {IPlugin} from '@kookjs/core'
-
 import action from './action'
 import filter from './filter'
 

@@ -1,0 +1,148 @@
+// If argument not sent
+mutation {
+  authLogin(password: "admin")
+}
+
+{
+  "error": {
+    "errors": [
+      {
+        "message": "Unknown argument \"email1\" on field \"Mutation.authLogin\". Did you mean \"email\"?",
+        "locations": [
+          {
+            "line": 2,
+            "column": 32
+          }
+        ],
+        "extensions": {
+          "code": "GRAPHQL_VALIDATION_FAILED"
+        }
+      },
+      {
+        "message": "Field \"authLogin\" argument \"email\" of type \"String!\" is required, but it was not provided.",
+        "locations": [
+          {
+            "line": 2,
+            "column": 3
+          }
+        ],
+        "extensions": {
+          "code": "GRAPHQL_VALIDATION_FAILED"
+        }
+      }
+    ]
+  }
+}
+
+
+// Error thrown manually
+mutation {
+  authLogin(password: "admin", email:"khanakia1121@gmail.com")
+}
+
+throw new AuthenticationError('must authenticate');
+
+{
+  "errors": [
+    {
+      "message": "must authenticate",
+      "locations": [
+        {
+          "line": 2,
+          "column": 3
+        }
+      ],
+      "path": [
+        "authLogin"
+      ],
+      "extensions": {
+        "code": "UNAUTHENTICATED"
+      }
+    }
+  ],
+  "data": {
+    "authLogin": null
+  }
+}
+
+
+
+throw new ApolloError('must authenticate', 'Invalid', {
+				customData: "sdfs"
+			});
+
+{
+  "errors": [
+    {
+      "message": "must authenticate",
+      "locations": [
+        {
+          "line": 2,
+          "column": 3
+        }
+      ],
+      "path": [
+        "authLogin"
+      ],
+      "extensions": {
+        "customData": "sdfs",
+        "code": "Invalid",
+        "exception": {
+          "customData": "sdfs"
+        }
+      }
+    }
+  ],
+  "data": {
+    "authLogin": null
+  }
+}
+
+
+type-class-validation errors
+mutation {
+  optionUpdate(args:{
+    key: "blogname",
+    value: "Kook"
+  }) {
+    key
+  }
+}
+
+
+{
+  "errors": [
+    {
+      "message": "Argument Validation Error",
+      "locations": [
+        {
+          "line": 2,
+          "column": 3
+        }
+      ],
+      "path": [
+        "optionUpdate"
+      ],
+      "extensions": {
+        "code": "INTERNAL_SERVER_ERROR",
+        "exception": {
+          "validationErrors": [
+            {
+              "target": {
+                "key": "blogname",
+                "value": "Kook"
+              },
+              "value": "blogname",
+              "property": "key",
+              "children": [],
+              "constraints": {
+                "isInt": "email already in use"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "data": null
+}

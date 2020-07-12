@@ -1,18 +1,96 @@
 # Write your query or mutation here
-query{
-  options {
-    option_name
-    option_value
+query {
+  options(
+    filters: [
+      
+      { field: "value", value: "Jeoga", condition: OR }
+    ]
+  ) {
+    items {
+      id
+      key
+      value
+    }
+    meta {
+    	total
+    	skip
+      take
+      orderBy {
+        key
+        value
+      }
+    }
+  }
+}
+
+
+query {
+  options(
+    filters: [
+      { field: "value", value: "%j%", operator: "like" }
+      { field: "value", value: "Jeoga", condition: OR }
+    ]
+  ) {
+    id
+    key
+    value
+  }
+}
+
+
+query {
+  options(meta:{
+    skip:2
+    take: 2
+    orderBy: [
+      {
+        key: "value",
+        value: DESC
+      },
+      {
+        key: "key",
+        value: ASC
+      }
+    ]
+  }) {
+    id
+    key
+    value
+  }
+}
+
+query {
+  option(id: 1) {
+    id
+    key
+    value
   }
 }
 
 mutation {
-  updateOption(option:{
-    option_name: "site_url",
-    option_value: "https://khanakia.com1"
-  })
+  optionAdd(args: {
+    key: "blogname",
+    value: "https://khanakia.com"
+  }) {
+    id
+    key
+    value
+  }
+}
+
+mutation {
+  optionUpdate(args:{
+    key: "blogname",
+    value: "Kook"
+  }) {
+    key
+  }
 }
 
 query {
-  option(option_name: "site_url")
+  optionValue(key: "siteurl")
+}
+
+mutation {
+  optionDelete(key:"blogname")
 }

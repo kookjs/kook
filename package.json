@@ -21,9 +21,12 @@
     "typescript": "^3.9.2"
   },
   "dependencies": {
+    "@types/app-root-path": "^1.2.4",
+    "@types/bcryptjs": "^2.4.2",
     "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.6",
     "@types/glob": "^7.1.1",
+    "@types/jsonwebtoken": "^8.5.0",
     "@types/lodash": "^4.14.150",
     "@types/lru-cache": "^5.1.0",
     "@types/morgan": "^1.9.0",

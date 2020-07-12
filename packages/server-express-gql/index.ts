@@ -2,10 +2,16 @@ import { injectable, inject } from "inversify";
 import path from "path";
 import _ from 'lodash'
 
-import { ApolloServer } from "apollo-server-express";
-import { buildSchema, NonEmptyArray } from "type-graphql";
+import { ApolloServer, ApolloError } from "apollo-server-express";
 
-import Hook from '@kookjs/hook'
+import {
+  GraphQLError,
+  GraphQLFormattedError
+} from 'graphql';
+
+import { buildSchema, NonEmptyArray, ArgumentValidationError } from "type-graphql";
+
+import Hook from '@khanakiajs/hook'
 import ServerExpress from '@kookjs/server-express'
 import { config } from '@kookjs/core'
 
@@ -19,7 +25,6 @@ type TResolvers = NonEmptyArray<Function> | NonEmptyArray<string>;
 type ContextFn  = (ctx: ExpressContext) => any;
 
 import { authChecker } from "../auth/auth-checker";
-
 
 @injectable()
 export default class ServerExpressGql {
@@ -44,9 +49,6 @@ export default class ServerExpressGql {
   }
 
   async boot() {
-    // console.log('Server Express Gql boot')
-    // console.log(this.config)
-
     // build TypeGraphQL executable schema
     const schema = await buildSchema({
       // resolvers: [RecipeResolver],
@@ -58,6 +60,9 @@ export default class ServerExpressGql {
     });
 
     const server = new ApolloServer({
+      introspection: true,
+      playground: true,
+      debug: false,
       // schema: schemaHello,
       schema,
       context: async (args) => {
@@ -72,15 +77,49 @@ export default class ServerExpressGql {
         //   userId: "222"
         //   // authorsLoader: createAuthorsLoader()
         // }
+      },
+      
+      formatError: (error: GraphQLError): GraphQLFormattedError => {
+        if (error.originalError instanceof ApolloError) {
+          return error;
+        }
+
+        /**
+         * Graphql was showing INTERNAL_SERVER_ERROR when exeuting queries from Apollo Client but
+         * it was working fine when executing same queries with GraphIQL
+         * https://github.com/apollographql/apollo-server/issues/3498#issuecomment-554966929
+         */
+        if (
+          error.extensions &&
+           (error.message.startsWith(`Variable "`) ||
+             error.extensions.code === "GRAPHQL_VALIDATION_FAILED")
+         ) {
+          error.extensions.code = "GRAPHQL_VALIDATION_FAILED";
+          return error;
+        }
+      
+        if (error.originalError instanceof ArgumentValidationError) {
+          error.extensions.code = 'ARGUMENT_VALIDATION_FAILED';
+        }
+      
+        return error;
       }
+      
 
     });
     
-    server.applyMiddleware({ app: this._serverExpress.app });    
+    /**
+     * Do not enable cors here if you have to use cors then use the server-express cors
+     * Otherwise we will have set the same option twice if you enable and will get withCrendentials origin errors
+     */
+    server.applyMiddleware({ 
+      app: this._serverExpress.app,
+      cors: false
+      // cors: { origin: ['http://localhost:7002'], credentials: true }
+    });
   }
 
-  async filterContext(fn: ContextFn) {
-    
+  async filterContext(fn: ContextFn) {    
     this._hook.Filter.add("ApolloServer/Context", fn)
   }
 

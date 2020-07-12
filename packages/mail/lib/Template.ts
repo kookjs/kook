@@ -1,65 +1,39 @@
-// import Twig from "twig";
-const Twig = require('twig')
 import fs from "fs";
 import path from "path";
-var twig = Twig.twig;
-import { config } from "@kookjs/core";
+// import Twig from "twig";
+const Twig = require('twig')
+import { env, config } from '@kookjs/core'
 var appRoot = require('app-root-path').path;
 
-interface CompileArgs {
+Twig.extendFunction("env", function(value, defaultValue) {
+	return env(value, defaultValue)
+});
+
+Twig.extendFunction("config", function(key, defaultValue) {
+	return config(key, defaultValue)
+});
+
+var twig = Twig.twig;
+
+interface TemplateCompileOptions {
+		/** Specify templates root or base directory path */
 		base?: string,
+		/** Template file path starting after the base path */
 		path: string,
+		/** Data Object to be passed to the template */
 		context?: any
 }
 
 export default class Template {
 	constructor() {
-		// this.dirView = Sapp['Uxm/Email'].config.dirView
+		
 	}
-
-	// get(name: string, defaultValue: any = null): any {
-	// 	try {
-	// 		const config_ = config("mail");
-	// 		// console.log(config_)
-	// 		const paths = config_.paths||{}
-	// 		for (const key in paths) {
-	// 			// console.log(path.join(paths[key] , name))
-	// 			let data = fs.readFileSync(path.join(paths[key] , name), "utf8");
-	// 			// console.log(data)
-	// 			return data;
-				
-	// 		}
-	// 	} catch (error) {
-	// 		// console.log("Twig File Not found.");
-	// 	}
-	// 	return defaultValue;
-	// }
-
-	// compile(args={}) {
-	// 		const config_ = config("mail");
-	// 		// console.log(config_)
-	// 		const paths = config_.paths||{}
-
-	//     let atts = Object.assign({}, {
-	//         template: null,
-	// 				data: {},
-	// 		}, args)
-
-	// 		// const templateData =  this.get(atts.template)
-			
-	// 		var template = twig({
-	// 			path: 'views/demo3/index.twig',
-	// 			async: true,
-	// 		});
-
-	// 		return template.render()
-	// }
 
 	/**
 	 * @param filePath Full Path of the Template file
 	 * @param data Data to pass to the template
 	 */
-	async load(filePath, data={}) {
+	async load(filePath, data={}): Promise<any> {
 		return new Promise((resolve, reject) => {
 			var template = twig({
 				path: filePath,
@@ -69,8 +43,8 @@ export default class Template {
 					resolve(output)
 				},
 				error(e) {
-					reject(e)
 					// console.log(e)
+					reject(e)
 				}
 			});
 		})
@@ -80,15 +54,21 @@ export default class Template {
 	/**
 	 * if first check template on config.path if exists then it will override the default one
 	 */
-	async compile(args: CompileArgs) {
+	async compile(args: TemplateCompileOptions) : Promise<any> {
 		const config_ = config("mail");
+
+		// default base path 
 		const basePath = config_.path || path.join(appRoot, 'resources/views')
 		// console.log(basePath)
+
+		// filepath specified as args
 		let filePath = path.join(args.base||basePath, args.path )
+
+		// orverride the args.base path with the default base path if file exists
 		let filePathOverride = path.join(basePath, args.path )
 		if(fs.existsSync(filePathOverride)) filePath = filePathOverride
 
-		// console.log(filePath)
+		console.log(filePath)
 		return await this.load(filePath, args.context||{})
 	}
 }

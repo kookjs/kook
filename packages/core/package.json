@@ -32,7 +32,7 @@
     "lodash": "^4.17.15",
     "reflect-metadata": "^0.1.13",
     "inversify": "^5.0.1",
-    "@kookjs/hook": "^1.0.0",
+    "@khanakiajs/hook": "^1.0.0",
     "app-root-path": "^3.0.0",
     "glob": "^7.1.6"
   },

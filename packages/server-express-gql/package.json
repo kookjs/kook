@@ -19,7 +19,7 @@
   "dependencies": {
     "inversify": "^5.0.1",
     "@kookjs/core": "^1.0.0",
-    "@kookjs/hook": "^1.0.0",
+    "@khanakiajs/hook": "^1.0.0",
     "@kookjs/server-express": "^1.0.0",
     "apollo-server-express": "^2.12.0",
     "type-graphql": "^1.0.0-rc.1",

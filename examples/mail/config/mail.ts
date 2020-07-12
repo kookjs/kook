@@ -1,12 +1,12 @@
 import { env } from '@kookjs/core'
 import path from 'path'
+import { ConfigOptions } from '@kookjs/mail'
 
-module.exports = {
-  'default' : 'smtp1',
+const config: ConfigOptions = {
+  'default' : env('MAIL_MAILER', 'smtp'),
 
   'mailers' : {
    'smtp': {
-      transport: "smtp",
       host: 'smtp.ethereal.email',
       port: 587,
       secure: false, // true for 465, false for other ports
@@ -25,9 +25,7 @@ module.exports = {
     'name' : env('MAIL_FROM_NAME', 'Example'),
   },
 
-  // 'paths': {
-  //   'resources': path.resolve(__dirname, '../resources/views/'),
-  //   'mail': path.resolve(__dirname, '../resources/views/mail/')
-  // }
   'path': path.resolve(__dirname, '../resources/views/')
 }
+
+export default config

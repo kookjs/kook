@@ -1,16 +1,10 @@
-const path = require('path');
-var appRoot = require('app-root-path').path;
-// export interface IAppConfig {
-//   appDir?: string
-//   appSecret? : string
-// }
+import { ConfigOptions } from './interface/ConfigOptions'
+import appRoot from 'app-root-path'
+import path from 'path'
 
-import { IAppConfig } from './interface/IAppConfig'
-
-// console.log(appRoot)
-const config: IAppConfig = {
-  root: appRoot,
-  appSecret: 'HN9W34G2BTZ7JZUAXEUC2'
+const config: ConfigOptions = {
+  root: path.resolve(appRoot.path, 'src'),
+  // appSecret: 'HN9W34G2BTZ7JZUAXEUC2'
 }
 
 export default config

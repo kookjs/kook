@@ -10,9 +10,7 @@ export default class RdbmsStore implements Store {
     try {
       const record = await CacheStore.findOne({ key });
       const epoch = Math.round(new Date().getTime() / 1000) 
-      // if (record.expire_at.getTime() < Date.now()) {
       if (record.expiration < epoch) {
-      // if (record.expire_at.getTime() < Date.now()) {
         this.del(key)
         return null
       }
@@ -46,9 +44,9 @@ export default class RdbmsStore implements Store {
 		}
   }
 
-  async del(key: string) : Promise<Boolean> {
+  async del(key: string) : Promise<boolean> {
     try {
-      console.log(await CacheStore.delete({ key }));
+      await CacheStore.delete({ key });
       return true
 		} catch (e) {
       console.log(e);
@@ -56,7 +54,7 @@ export default class RdbmsStore implements Store {
 		}
   }
 
-  async flush(): Promise<Boolean> {
+  async flush(): Promise<boolean> {
     try {
       await CacheStore.query('TRUNCATE table "cache_store"'); 
       return true

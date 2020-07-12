@@ -1,35 +1,44 @@
 mutation {
-  register(data:{
+  authRegister(args:{
     fullName: "Aman",
     email:"khanakia@gmail.com",
     password:"admin"
   }) {
     id
     email
+    fullName    
   }
 }
 
+# mutation {
+#   login(
+#     email:"khanakia@gmail.com",
+#     password:"admin"
+#   )
+# }
+
 mutation {
-  login(
-    email:"khanakia@gmail.com",
-    password:"admin"
-  )
+  authLogin(args:{
+    username:"khanakia"
+    password: "admin", 
+  })
 }
 
 query {
-  me {
+  authMe {
     id
     email
     fullName
   }
 }
 
+
 mutation {
-  changePassword(
-    data: {
+  authChangePassword(
+    args: {
       currentPassword: "admin"
-      password: "admin"
-      confirmPassword: "admin"
+      password: "admin123"
+      confirmPassword: "admin123"
     }
   )
 }

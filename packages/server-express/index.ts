@@ -16,7 +16,7 @@ import { injectable, inject } from "inversify";
 import _ from 'lodash'
 
 import Server from '@kookjs/server'
-import Hook from '@kookjs/hook'
+import Hook from '@khanakiajs/hook'
 // import { TYPES } from "../../types";
 import { config } from '@kookjs/core'
 
@@ -56,7 +56,7 @@ export default class ServerExpress {
     app.use(bodyParser.json({limit: '10mb'}));
     app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
     app.use(cookieParser());
-    app.use(cors())
+    app.use(cors({ origin: true, credentials: true }))
 
     app.use(async (req, res, next) => {
         await hook.Filter.apply('Www/GlobalMiddleware', {

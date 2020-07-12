@@ -1,7 +1,7 @@
 {
-  "name": "@kookjs/hook",
+  "name": "@khanakiajs/hook",
   "version": "1.0.0",
-  "description": "Ultra modern, fast, powerful node.js web framework (@hook)",
+  "description": "Hooks are a way for one piece of code to interact/modify another piece of code at specific, pre-defined spots.",
   "author": "Aman Khanakia",
   "license": "MIT",
   "homepage": "https://kook.khanakia.com",
@@ -17,8 +17,7 @@
     "access": "public"
   },
   "dependencies": {
-    "inversify": "^5.0.1",
-    "@kookjs/core": "^1.0.0"
+    "inversify": "^5.0.1"
   },
   "devDependencies": {
 

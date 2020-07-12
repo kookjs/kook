@@ -19,7 +19,7 @@
   "dependencies": {
     "inversify": "^5.0.1",
     "@kookjs/core": "^1.0.0",
-    "@kookjs/hook": "^1.0.0",
+    "@khanakiajs/hook": "^1.0.0",
     "@kookjs/server": "^1.0.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",

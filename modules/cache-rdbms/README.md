@@ -52,7 +52,7 @@ main()
 ## Contribute
 
 If you would like to contribute to the project, please fork it and send us a pull request.  Please add tests
-for any new features or bug fixes.  Also run `make` before submitting the pull request.
+for any new features or bug fixes.
 
 ## Stay in touch
 

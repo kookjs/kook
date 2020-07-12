@@ -33,3 +33,5 @@ export default class DB {
     }
   }
 }
+
+export * as DbHelper from './helper'

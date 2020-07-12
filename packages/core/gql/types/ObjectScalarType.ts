@@ -1,6 +1,6 @@
 import { GraphQLScalarType, Kind } from "graphql";
 
-const ObjectScalarType = new GraphQLScalarType({
+export const ObjectScalarType = new GraphQLScalarType({
 	name: "Object",
 	description: "Arbitrary object",
 	parseValue: (value) => {
@@ -20,5 +20,3 @@ const ObjectScalarType = new GraphQLScalarType({
 		}
 	},
 });
-
-export default ObjectScalarType;

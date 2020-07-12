@@ -12,10 +12,10 @@ app.registerPlugin(Cache);
 
 const main = async () => {
 	await app.boot();
-  const cache = app.getPlugin(Cache);
-  // console.log(cache)
-  await cache.default.put('name', 'aman')
-  console.log(await cache.default.get('name'))
+  const cache = await app.getPlugin(Cache).store();
+  
+  await cache.put('name', 'aman')
+  console.log(await cache.get('name'))
   // console.log(await cache.default.del('name'))
 };
 

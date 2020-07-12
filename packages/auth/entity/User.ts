@@ -9,7 +9,7 @@ export class User extends BaseEntity {
   id: number;
 
   @Field()
-  @Column("text", { unique: true })
+  @Column({ length: "200", unique: true })
   email: string;
 
   @Field()
@@ -19,7 +19,7 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
-  @Column("text", {nullable: true})
+  @Column({nullable: true})
   secret: string; // used for JWT token creation
 
   @Column("bool", { default: false })

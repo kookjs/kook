@@ -7,18 +7,18 @@ export default class Option extends BaseEntity {
 
     @Field(() => ID)
     @PrimaryGeneratedColumn()
-    option_id: number;
+    id: number;
 
     @Field(() => String)
     @Column({
         unique: true
     })
-    option_name: string;
+    key: string;
 
     @Field(() => String, { nullable: true })
     @Column({
         type: String,
         nullable: true
     })
-    option_value: string|null;    
+    value: string|null;    
 }

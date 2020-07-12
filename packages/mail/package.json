@@ -1,7 +1,7 @@
 {
   "name": "@kookjs/mail",
   "version": "1.0.0",
-  "description": "Ultra modern, fast, powerful node.js web framework",
+  "description": "Mail plugin to send email.",
   "author": "Aman Khanakia",
   "license": "MIT",
   "homepage": "https://kook.khanakia.com",

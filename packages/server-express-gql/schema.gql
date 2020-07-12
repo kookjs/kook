@@ -3,6 +3,9 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+"""Arbitrary object"""
+scalar Any
+
 input ChangePasswordInput {
   confirmPassword: String!
   currentPassword: String!
@@ -14,27 +17,63 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 """
 scalar DateTime
 
+"""The basic FilterCondition"""
+enum FilterCondition {
+  AND
+  OR
+}
+
+input FilterInput {
+  condition: FilterCondition = AND
+  field: String!
+  operator: String = "="
+  value: Any
+}
+
+input LoginInput {
+  password: String!
+  username: String!
+}
+
+input MetaInput {
+  limit: Float = 10
+  orderBy: [SortOrderInput!]
+  page: Float = 1
+}
+
+type MetaOutput {
+  limit: Float
+  orderBy: [SortOrderOutput!]
+  page: Float
+  total: Float
+}
+
 type Mutation {
-  addOption(option: OptionInput!): Option!
   addRecipe(recipe: RecipeInput!): Recipe!
-  changePassword(data: ChangePasswordInput!): Boolean!
-  forgotPassword(email: String!): String!
-  login(email: String!, password: String!): String
-  passwordReset(data: PasswordResetInput!): String!
-  register(data: RegisterInput!): User!
-  removeOption(option_name: String!): Boolean!
-  updateOption(option: OptionInput!): Boolean!
+  authChangePassword(args: ChangePasswordInput!): Boolean!
+  authForgotPassword(username: String!): String!
+  authLogin(args: LoginInput!): String
+  authPasswordReset(args: PasswordResetInput!): String!
+  authRegister(args: RegisterInput!): User!
+  optionAdd(args: OptionInput!): Option!
+  optionDelete(key: String!): Boolean!
+  optionUpdate(args: OptionInput!): Option!
 }
 
 type Option {
-  option_id: ID!
-  option_name: String!
-  option_value: String
+  id: ID!
+  key: String!
+  value: String
 }
 
 input OptionInput {
-  option_name: String!
-  option_value: String
+  key: String!
+  value: String
+}
+
+type PaginatedOptionResponse {
+  items: [Option!]!
+  meta: MetaOutput!
 }
 
 input PasswordResetInput {
@@ -43,9 +82,10 @@ input PasswordResetInput {
 }
 
 type Query {
-  me: User
-  option(option_name: String!): String
-  options: [Option!]!
+  authMe: User
+  option(id: Float!): Option
+  options(filters: [FilterInput!], meta: MetaInput): PaginatedOptionResponse!
+  optionValue(key: String!): String
   recipe(title: String!): Recipe
 
   """Get all the recipes from around the world """
@@ -74,6 +114,22 @@ input RegisterInput {
   email: String!
   fullName: String!
   password: String!
+}
+
+"""The basic directions"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input SortOrderInput {
+  key: String
+  value: SortDirection = ASC
+}
+
+type SortOrderOutput {
+  key: String
+  value: SortDirection
 }
 
 type User {
