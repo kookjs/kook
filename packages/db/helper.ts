@@ -1,5 +1,5 @@
 import { SelectQueryBuilder, Entity } from 'typeorm'
-import { FilterInput, MetaInput, SortDirection } from '@kookjs/core'
+import { FilterInput } from '@kookjs/core/gql'
 import { isArray } from "lodash";
 
 /**

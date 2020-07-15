@@ -1,5 +1,4 @@
 import { createApp, env } from "@kookjs/core";
-import path from "path";
 
 const app = createApp({
 	root: __dirname,
@@ -12,9 +11,11 @@ const plugins = [
 	"@kookjs/server-express-gql",
 	"@kookjs/option",
 	"@kookjs/auth",
+	// __dirname+"/../packages/auth",
 	"@kookjs/cache",
 	"@kookjs/mail",
-	"@kookjs/upwork"
+	"@kookjs/auth-acl",
+	// "@kookjs/upwork"
 ];
 
 const main = async () => {

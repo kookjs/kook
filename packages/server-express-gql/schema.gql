@@ -50,6 +50,13 @@ type MetaOutput {
 
 type Mutation {
   addRecipe(recipe: RecipeInput!): Recipe!
+  autAcl_UserCap_Add(args: UserCapAddInput!): UserCap!
+  autAcl_UserCap_Delete(id: Float!): Boolean!
+  autAcl_UserCap_Update(args: UserCapEditInput!): UserCap!
+  autAcl_UserCapToRole_Assign(args: UserCapToRoleAddInput!): String!
+  autAcl_UserRole_Add(args: UserRoleAddInput!): UserRole!
+  autAcl_UserRole_Delete(id: Float!): Boolean!
+  autAcl_UserRole_Update(args: UserRoleEditInput!): UserRole!
   authChangePassword(args: ChangePasswordInput!): Boolean!
   authForgotPassword(username: String!): String!
   authLogin(args: LoginInput!): String
@@ -76,12 +83,32 @@ type PaginatedOptionResponse {
   meta: MetaOutput!
 }
 
+type PaginatedUserCapResponse {
+  items: [UserCap!]!
+  meta: MetaOutput!
+}
+
+type PaginatedUserCapToRoleResponse {
+  items: [UserCapToRole!]!
+  meta: MetaOutput!
+}
+
+type PaginatedUserRoleResponse {
+  items: [UserRole!]!
+  meta: MetaOutput!
+}
+
 input PasswordResetInput {
   password: String!
   token: String!
 }
 
 type Query {
+  autAcl_UserCap_Get(id: Float!): UserCap!
+  autAcl_UserCap_List(filters: [FilterInput!], meta: MetaInput): PaginatedUserCapResponse!
+  autAcl_UserCapToRole_List(filters: [FilterInput!], meta: MetaInput): PaginatedUserCapToRoleResponse!
+  autAcl_UserRole_Get(id: Float!): UserRole!
+  autAcl_UserRole_List(filters: [FilterInput!], meta: MetaInput): PaginatedUserRoleResponse!
   authMe: User
   option(id: Float!): Option
   options(filters: [FilterInput!], meta: MetaInput): PaginatedOptionResponse!
@@ -136,4 +163,53 @@ type User {
   email: String!
   fullName: String!
   id: ID!
+}
+
+type UserCap {
+  id: ID!
+  isDefault: Boolean!
+  key: String!
+  title: String!
+}
+
+input UserCapAddInput {
+  key: String!
+  title: String
+}
+
+input UserCapEditInput {
+  id: Float!
+  key: String!
+  title: String
+}
+
+type UserCapToRole {
+  cap: UserCap!
+  capId: Float!
+  id: ID!
+  role: UserRole!
+  roleId: Float!
+}
+
+input UserCapToRoleAddInput {
+  capKeys: [String!]
+  denyCapKeys: [String!]
+  roleKey: String!
+}
+
+type UserRole {
+  id: ID!
+  isDefault: Boolean!
+  key: String!
+  title: String!
+}
+
+input UserRoleAddInput {
+  key: String!
+  title: String
+}
+
+input UserRoleEditInput {
+  key: String!
+  title: String
 }

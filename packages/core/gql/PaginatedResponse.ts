@@ -1,12 +1,17 @@
 import { Field, ObjectType, ClassType } from "type-graphql";
 import { MetaOutput } from './MetaOutput'
 
+export interface IPaginatedResponse {
+  items: any;
+  meta: MetaOutput;
+}
+
 /**
  * 
  * https://github.com/MichalLytek/type-graphql/blob/master/docs/generic-types.md
  * @param TItemClass 
  */
-export function PaginatedResponse<TItem>(TItemClass: ClassType<TItem>) {
+export function PaginatedResponse<TItem>(TItemClass: ClassType<TItem>): any {
   // `isAbstract` decorator option is mandatory to prevent registering in schema
   
   @ObjectType(`Paginated${TItemClass.name}Response`)

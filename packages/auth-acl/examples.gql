@@ -1,0 +1,124 @@
+mutation {
+  autAcl_UserRole_Add(args:{
+    key: "ta"
+    title: "Super Administrator"
+  }) {
+    id
+    key
+    title
+    isDefault
+  }
+}
+
+mutation {
+  autAcl_UserRole_Update(args:{
+    key: "sa",
+    title: "Super Administrator11"    
+  }) {
+    id
+    key
+    title
+    isDefault
+  }
+}
+
+query{
+  autAcl_UserRole_Get(id: 4) {
+    id
+    key
+    title
+    isDefault
+  }
+}
+
+mutation {
+  autAcl_UserRole_Update(args:{
+    id: 1,
+    name: "Super Administrator"    
+  }) {
+    id
+    name
+    isDefault
+  }
+}
+
+mutation {
+  autAcl_UserRole_Delete(id: 1)
+}
+
+query{
+  autAcl_UserRole_List {
+    items {
+      id
+      key
+      title
+      isDefault
+    }
+    meta {
+      limit
+      page
+      total
+    }
+  }
+}
+
+
+mutation {
+  autAcl_UserCap_Add(args:{
+    key: "edit_user",
+    title: "Edit User"    
+  }) {
+    id
+    name
+    desc
+    isDefault
+  }
+}
+
+query{
+  autAcl_UserCap_List {
+    items {
+      id
+      key
+      title
+      isDefault
+    }
+    meta {
+      limit
+      page
+      total
+    }
+  }
+}
+
+
+
+mutation {
+  autAcl_UserCapToRole_Assign(args:{
+    roleKey: "subscriber"
+    capKeys: ["dash_login", "add_users", "edit_users"]
+    denyCapKeys: ["read_users"]
+  })
+}
+
+query {
+  autAcl_UserCapToRole_List(
+    filters: [
+      {field:"role.key", value:"administrator"}
+    ]
+  ){
+    items {
+      id
+      capId
+      roleId
+      cap {
+        id
+        key
+      }
+      role {
+        id
+        key
+      }
+    }
+  }
+}

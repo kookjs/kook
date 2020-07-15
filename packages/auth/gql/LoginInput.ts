@@ -1,4 +1,4 @@
-import  { User }  from "./entity/User";
+// import  { User }  from "./entity/User";
 import { InputType, Field } from "type-graphql";
 import { IsInt } from "class-validator";
 

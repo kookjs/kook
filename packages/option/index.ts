@@ -9,7 +9,8 @@ import ServerExpressGql from '@kookjs/server-express-gql'
 
 import OptionEntity from './entity/Option'
 import OptionResolver from "./OptionResolver"; // add this
-
+import OptionRepository from "./OptionRepository";
+import { getCustomRepository, getRepository } from "typeorm";
 @injectable()
 export default class Option {
   readonly version: string = "1.0";
@@ -36,6 +37,26 @@ export default class Option {
 
     const serverExpressGql = app.getPlugin(ServerExpressGql)
     serverExpressGql.addResolver(OptionResolver)
+  }
+
+  // async add(key, value) {
+  //   const optionRepo = getCustomRepository(OptionRepository);
+  //     return await optionRepo.findByKey(key, value);
+  // }
+
+  async get(key, defaultValue = null) {
+      const optionRepo = getCustomRepository(OptionRepository);
+      return await optionRepo.findByKey(key, defaultValue);
+  }
+
+  async update(key, value) {
+      const optionRepo = getCustomRepository(OptionRepository);
+      return await optionRepo.updateByKey(key, value);
+  }
+  
+  async delete(key) {
+      const optionRepo = getCustomRepository(OptionRepository);
+      return await optionRepo.removeByKey(key);
   }
 
 }

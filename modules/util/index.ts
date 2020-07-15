@@ -67,3 +67,9 @@ export function interopDefault(ex) {
 export function getGlobalVariable(): any {
 	return global;
 }
+
+export function convertToBool(value: any) {
+	if ([1, '1', true, 'true'].indexOf(value) !== -1)
+			return true;
+	return false;
+}

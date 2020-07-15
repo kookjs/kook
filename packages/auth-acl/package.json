@@ -1,0 +1,46 @@
+{
+  "name": "@kookjs/auth-acl",
+  "version": "1.0.0",
+  "description": "Auth ACL plugin for the @kook/auth plugin",
+  "author": "Aman Khanakia",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "directories": {
+    "dist": "dist",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rimraf ./dist && tsc",
+    "test": "echo testing1 common with version: $npm_package_version"
+  },
+  "homepage": "https://kook.khanakia.com",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/khanakia"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kookjs/kook"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@khanakiajs/util": "1.0.0",
+    "@kookjs/core": "^1.0.0",
+    "@kookjs/db": "1.0.0",
+    "@kookjs/option": "1.0.0",
+    "@kookjs/server-express-gql": "1.0.0",
+    "apollo-server-errors": "^2.4.2",
+    "apollo-server-express": "^2.15.1",
+    "class-validator": "^0.12.2",
+    "graphql": "^15.3.0",
+    "inversify": "^5.0.1",
+    "type-graphql": "^1.0.0-rc.1",
+    "typeorm": "^0.2.25"
+  },
+  "devDependencies": {}
+}

@@ -38,6 +38,7 @@ Thumbs.db
 
 # ignore server created files
 error_log
+dist
 /tmp/
 /logs/
 /log/

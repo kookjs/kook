@@ -1,7 +1,7 @@
 import { ConfigOptions } from "@kookjs/auth";
 
 const config: ConfigOptions = {
-  jwtExpirySeconds: 3000
+  jwtExpirySeconds: 86400
 };
 
 export default config;

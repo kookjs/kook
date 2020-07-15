@@ -6,9 +6,9 @@ import OptionRepository from "./OptionRepository";
 import { OptionInput } from "./OptionInput";
 import Option from "./entity/Option";
 
-import { FilterInput, MetaInput, SortDirection, PaginatedResponse } from "@kookjs/core/gql";
+import { FilterInput, MetaInput, SortDirection, PaginatedResponse, IPaginatedResponse } from "@kookjs/core/gql";
 import { DbHelper } from "@kookjs/db";
-import { sleep } from '@khanakiajs/util'
+// import { sleep } from '@khanakiajs/util'
 
 const PaginatedItemResponse = PaginatedResponse(Option);
 type PaginatedItemResponse = InstanceType<typeof PaginatedItemResponse>;
@@ -22,7 +22,7 @@ export default class OptionResolver {
 	async options(
 		@Arg("meta", { nullable: true }) metaArgs?: MetaInput,
 		@Arg("filters", (type) => [FilterInput], { nullable: true }) filters?: FilterInput[]
-	): Promise<PaginatedItemResponse> {
+	): Promise<IPaginatedResponse> {
 		let qb = getRepository(Option).createQueryBuilder("option");
 
 		const meta: MetaInput = Object.assign(
