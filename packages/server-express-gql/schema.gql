@@ -110,6 +110,7 @@ type Query {
   autAcl_UserRole_Get(id: Float!): UserRole!
   autAcl_UserRole_List(filters: [FilterInput!], meta: MetaInput): PaginatedUserRoleResponse!
   authMe: User
+  itemList: String
   option(id: Float!): Option
   options(filters: [FilterInput!], meta: MetaInput): PaginatedOptionResponse!
   optionValue(key: String!): String

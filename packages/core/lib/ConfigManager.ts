@@ -14,7 +14,9 @@ class ConfigManager {
 
 	get(name: string): any {
 		if (this.config[name]) return this.config[name];
-		let filePath = path.resolve(appRoot.path, 'config', `${name}.ts`);
+		let filePathWitoutExt = path.resolve(appRoot.path, 'config', `${name}`);
+		let filePath = filePathWitoutExt + '.ts'
+		if (!fs.existsSync(filePath)) filePath = filePathWitoutExt + '.js'
 		if (fs.existsSync(filePath)) {
 			const config = require(filePath);
 			this.config[name] = interopDefault(config);
