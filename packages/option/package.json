@@ -23,7 +23,7 @@
     "@kookjs/server": "^1.0.0",
     "@kookjs/server-express-gql": "^1.0.0",
     "typeorm": "^0.2.24",
-    "class-transformer": "^0.2.3",
+    "class-transformer": "^0.3.1",
     "class-validator": "^0.12.2",
     "type-graphql": "^1.0.0-rc.1"
   }
