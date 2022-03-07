@@ -108,6 +108,8 @@ export default class ServerExpressGql {
 
     });
     
+    await server.start()
+    
     /**
      * Do not enable cors here if you have to use cors then use the server-express cors
      * Otherwise we will have set the same option twice if you enable and will get withCrendentials origin errors

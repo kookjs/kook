@@ -28,15 +28,15 @@
     }
   },
   "dependencies": {
-    "chalk": "^4.0.0",
-    "lodash": "^4.17.15",
+    "chalk": "4.1.2",
+    "lodash": "^4.17.21",
     "reflect-metadata": "^0.1.13",
-    "inversify": "^5.0.1",
+    "inversify": "^6.0.1",
     "@khanakiajs/hook": "^1.0.0",
     "app-root-path": "^3.0.0",
-    "glob": "^7.1.6"
+    "glob": "^7.2.0"
   },
   "devDependencies": {
-    "@types/glob": "^7.1.1"
+    "@types/glob": "^7.2.0"
   }
 }

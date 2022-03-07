@@ -3,117 +3,16 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
-"""Arbitrary object"""
-scalar Any
-
-input ChangePasswordInput {
-  confirmPassword: String!
-  currentPassword: String!
-  password: String!
-}
-
 """
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
 scalar DateTime
 
-"""The basic FilterCondition"""
-enum FilterCondition {
-  AND
-  OR
-}
-
-input FilterInput {
-  condition: FilterCondition = AND
-  field: String!
-  operator: String = "="
-  value: Any
-}
-
-input LoginInput {
-  password: String!
-  username: String!
-}
-
-input MetaInput {
-  limit: Float = 10
-  orderBy: [SortOrderInput!]
-  page: Float = 1
-}
-
-type MetaOutput {
-  limit: Float
-  orderBy: [SortOrderOutput!]
-  page: Float
-  total: Float
-}
-
 type Mutation {
   addRecipe(recipe: RecipeInput!): Recipe!
-  autAcl_UserCap_Add(args: UserCapAddInput!): UserCap!
-  autAcl_UserCap_Delete(id: Float!): Boolean!
-  autAcl_UserCap_Update(args: UserCapEditInput!): UserCap!
-  autAcl_UserCapToRole_Assign(args: UserCapToRoleAddInput!): String!
-  autAcl_UserRole_Add(args: UserRoleAddInput!): UserRole!
-  autAcl_UserRole_Delete(id: Float!): Boolean!
-  autAcl_UserRole_Update(args: UserRoleEditInput!): UserRole!
-  authChangePassword(args: ChangePasswordInput!): Boolean!
-  authForgotPassword(username: String!): String!
-  authLogin(args: LoginInput!): String
-  authPasswordReset(args: PasswordResetInput!): String!
-  authRegister(args: RegisterInput!): User!
-  optionAdd(args: OptionInput!): Option!
-  optionDelete(key: String!): Boolean!
-  optionUpdate(args: OptionInput!): Option!
-}
-
-type Option {
-  id: ID!
-  key: String!
-  value: String
-}
-
-input OptionInput {
-  key: String!
-  value: String
-}
-
-type PaginatedOptionResponse {
-  items: [Option!]!
-  meta: MetaOutput!
-}
-
-type PaginatedUserCapResponse {
-  items: [UserCap!]!
-  meta: MetaOutput!
-}
-
-type PaginatedUserCapToRoleResponse {
-  items: [UserCapToRole!]!
-  meta: MetaOutput!
-}
-
-type PaginatedUserRoleResponse {
-  items: [UserRole!]!
-  meta: MetaOutput!
-}
-
-input PasswordResetInput {
-  password: String!
-  token: String!
 }
 
 type Query {
-  autAcl_UserCap_Get(id: Float!): UserCap!
-  autAcl_UserCap_List(filters: [FilterInput!], meta: MetaInput): PaginatedUserCapResponse!
-  autAcl_UserCapToRole_List(filters: [FilterInput!], meta: MetaInput): PaginatedUserCapToRoleResponse!
-  autAcl_UserRole_Get(id: Float!): UserRole!
-  autAcl_UserRole_List(filters: [FilterInput!], meta: MetaInput): PaginatedUserRoleResponse!
-  authMe: User
-  itemList: String
-  option(id: Float!): Option
-  options(filters: [FilterInput!], meta: MetaInput): PaginatedOptionResponse!
-  optionValue(key: String!): String
   recipe(title: String!): Recipe
 
   """Get all the recipes from around the world """
@@ -136,81 +35,4 @@ type Recipe {
 input RecipeInput {
   description: String
   title: String!
-}
-
-input RegisterInput {
-  email: String!
-  fullName: String!
-  password: String!
-}
-
-"""The basic directions"""
-enum SortDirection {
-  ASC
-  DESC
-}
-
-input SortOrderInput {
-  key: String
-  value: SortDirection = ASC
-}
-
-type SortOrderOutput {
-  key: String
-  value: SortDirection
-}
-
-type User {
-  email: String!
-  fullName: String!
-  id: ID!
-}
-
-type UserCap {
-  id: ID!
-  isDefault: Boolean!
-  key: String!
-  title: String!
-}
-
-input UserCapAddInput {
-  key: String!
-  title: String
-}
-
-input UserCapEditInput {
-  id: Float!
-  key: String!
-  title: String
-}
-
-type UserCapToRole {
-  cap: UserCap!
-  capId: Float!
-  id: ID!
-  role: UserRole!
-  roleId: Float!
-}
-
-input UserCapToRoleAddInput {
-  capKeys: [String!]
-  denyCapKeys: [String!]
-  roleKey: String!
-}
-
-type UserRole {
-  id: ID!
-  isDefault: Boolean!
-  key: String!
-  title: String!
-}
-
-input UserRoleAddInput {
-  key: String!
-  title: String
-}
-
-input UserRoleEditInput {
-  key: String!
-  title: String
 }

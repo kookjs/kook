@@ -5,17 +5,16 @@ const app = createApp({
 });
 
 const plugins = [
-	"@kookjs/db",
 	"@kookjs/server",
 	"@kookjs/server-express",
 	"@kookjs/server-express-gql",
-	"@kookjs/option",
-	"@kookjs/auth",
+	// "@kookjs/db",
+	// "@kookjs/option",
+	// "@kookjs/auth",
 	// __dirname+"/../packages/auth",
-	"@kookjs/cache",
-	"@kookjs/mail",
-	"@kookjs/auth-acl",
-	// "@kookjs/upwork"
+	// "@kookjs/cache",
+	// "@kookjs/mail",
+	// "@kookjs/auth-acl",
 ];
 
 const main = async () => {
